@@ -30,7 +30,8 @@ An example config can be seen below:
     "variables": {},
     "commands": {
       "begining": ["adb -s !device_id shell monkey -p !app_id 1"],
-      "middle": ["adb pull !app_path !app_id.apk"],
+      "middle": ["adb  -s !device pull !app_path !app_id.apk"],
+      "end": ["reverse: !app_id.apk"],
       "again": ["block:begining"]
     }
 }
