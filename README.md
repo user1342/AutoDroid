@@ -1,6 +1,6 @@
 
 <p align="center">
-    <img width=100% src="image.png">
+    <img width=100% src="cover.png">
   </a>
 </p>
 <p align="center"> 📱 A tool for automating interactions with Android devices - including ADB, AndroGuard, and Frida interactivity.  📦</p>
