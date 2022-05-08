@@ -6,20 +6,39 @@
 <p align="center"> 📱 A tool for automating interactions with Android devices - including ADB, AndroGuard, and Frida interactivity.  📦</p>
 
 <br>
-# AndroidInterface
-## Instalation
-Use the provided requirements file to install all required dependancies. 
 
-```
+AutoDroid is a Python tool for programatically scripting bulk interactions with an Android device, possibly use cases include:
+- Downloading and extracting all APKs from all connected devices.
+- Testing a developed application on a multiple devices at once.
+- Testing potential malware against a suite of AV products.
+
+# Getting Started
+First things first you will need to install the dependancies of AutoDroid, these are specified in the requirements file and can be installed by following the below command.
+
+```bash
 pip install -r REQUIREMENTS.txt
 ```
 
-## Usage
-Running the python file with a json configuration file will begin automating device interaction.
+AutoDroid needs to be provided a valid Json configuration file as a command line argument. The below shows a simple configuration file example that will retrieve all applications from all connected devices one at a time and extract the APKs to zips using AndroGuard.
 
+```json
+{
+  "devices": ["*"],
+    "apps": ["*"],
+    "commands": ["adb pull !app_path !app_id.apk","reverse: !app_id.apk"]
+}
 ```
-python AndroidInterface.py config.json
+
+Once you have created a valid AutoDroid configuration file you can begin device interaction by running the ```AutoDroid.py``` python file with the configuration file as it's command line paramiter.
+
+```bash
+python AutoDroid.py config.json
 ```
+
+
+
+
+
 
 An example config can be seen below:
 
