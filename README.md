@@ -129,3 +129,19 @@ The block constant provides simple looping and call-back functionality. This con
 ```
 
 # More complex configs
+## Malware Analysis
+The below is an example of using AutoDroid to test potential malware on Android devices. This config installs the potential malware, records the screen, retrieves the screen capture, and uninstalls the application.
+
+```json 
+{
+  "devices": ["*"],
+    "apps": [],
+    "commands": {
+      "record_screen": ["adb shell screenrecord /data/local/tmp/test.mp4 --time-limit 120"],
+      "install_eicar":["adb install com.fsecure.eicar.antivirus.test.apk"],
+      "user_input":["adb shell monkey -p com.fsecure.eicar.antivirus.test -v 1","sleep: 20"],
+      "uninstall": ["adb uninstall com.fsecure.eicar.antivirus.test"],
+      "get video": ["adb pull /data/local/tmp/test.mp4", "sleep: 20","adb shell rm /data/local/tmp/test.mp4"]
+    }
+}
+```
