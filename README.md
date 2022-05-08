@@ -32,7 +32,7 @@ AutoDroid needs to be provided a valid Json configuration file as a command line
 Once you have created a valid AutoDroid configuration file you can begin device interaction by running the ```AutoDroid.py``` python file with the configuration file as it's command line parameter.
 
 ```bash
-python AutoDroid.py config.json
+python AutoDroid.py example_config.json
 ```
 # Commands and blocks
 The AutoDroid configuration file can be provided with a series of commands to execute on the target devices, these commands are run locally on your machine and so the programs and files being called must be present. These commands can be in either a list format (as can be seen in the example above) or as a key value pair map. These key value pairs are defined as blocks of commands, where the constant (escribed below) ```block:<block name>``` can be used to run a block. An example of using blocks can be seen below.
