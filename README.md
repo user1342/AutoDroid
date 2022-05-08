@@ -34,10 +34,57 @@ Once you have created a valid AutoDroid configuration file you can begin device 
 ```bash
 python AutoDroid.py config.json
 ```
+# Commands and blocks
+The AutoDroid configuration file can be provided with a series of commands to execute on the target devices, these commands are run locally on your machine and so the programs and files being called must be present. These commands can be in either a list format (as can be seen in the example above) or as a key value pair map. These key value pairs are defined as blocks of commands, where the constant (escribed below) ```block:<block name>``` can be used to run a block. An example of using blocks can be seen below.
 
+```json 
+{
+  "devices": ["*"],
+    "apps": ["*"],
+    "commands": {
+      "test_user_input":["adb shell monkey -v 5 -p !app_id"],
+      "retrieve_apk":["adb pull !app_path !app_id.apk","sleep:5"]
+    }
+}
+```
 
+# Devices and apps
+Two additional fields that are instramental to AutoDroid are the ```devices``` and ```apps``` fields. These fields define the adb device ID for the device(s) being targeted (a list of strings) and the application reverse domain notation name (i.e. ```com.example.application```) for the applications provided (a list of strings). Both of these fields can be empty or defined as ```*``` where all available devices and apps will be targeted. In the backend the way this works is when a value is provided in these fields the program will loop through all commands in order for each application on each device. An example of specifiying a specific device and app can be seen below:
 
+```json
+{
+  "devices": ["09261JEC216934"],
+    "apps": ["com.google.android.networkstack.tethering"],
+    "commands": ["adb pull !app_path !app_id.apk"]
+}
+```
 
+When the devices fields is not empty (i.e. ```"devices":[],```) a variable (see below) of ```!device_id``` is created. This variable can be used in your commands to denote the ADB device ID for the current targeted device. Similarly the variables ```!app_id```, and ```!app_path``` are added when the app field is not empty and can be used in commands to define the app reverse domain notation name and the path to that application's APK file.
+
+# Variables
+To save time, AutoDroid allows for an infinate amount of variables to be set in a script. These variables can be throught of as wildcards and are constructed in a key value pair format. When the key of a variable is located in a command it will be replaced for the value. An example configuration that utilises variables can be seen below, in this configuration file the variable ```!test``` has been added as short hand for a ```monkey``` adb command and the built-in variable ```!app_id``` is also used. 
+
+```json
+{
+  "devices": ["*"],
+    "apps": ["*"],
+    "variables": {"!test": "adb shell monkey -v 500 -p"},
+    "commands": ["!test !app_id"]
+}
+```
+
+The preffered standard for using variables is to presede them with a ```!``` and to use ```_``` instead of spaces. The following variables are reserved and should not be included in your configuration file: ```!device_id```, ```!app_id```, and ```!app_path```. 
+
+# Constants
+Constants are commands specific to AutoDroid and relate to specific functionality. Normally broken down into a keyword followed by a ```:``` and then one or more variables delimiated by a ```;``. These constants must be used at the start of a command and should always be in lower case. Examples will be given in the individual setions.
+
+## Frida 
+
+## AndroGuard 
+
+## Sleep 
+
+## Block
 
 
 An example config can be seen below:
