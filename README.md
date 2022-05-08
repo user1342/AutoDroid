@@ -49,7 +49,7 @@ The AutoDroid configuration file can be provided with a series of commands to ex
 ```
 
 # Devices and apps
-Two additional fields that are instrumental to AutoDroid are the ```devices``` and ```apps``` fields. These fields define the adb device ID for the device(s) being targeted (a list of strings) and the application reverse domain notation name (i.e. ```com.example.application```) for the applications provided (a list of strings). Both of these fields can be empty or defined as ```*``` where all available devices and apps will be targeted. In the backend the way this works is when a value is provided in these fields the program will loop through all commands in order for each application on each device. An example of specifying a specific device and app can be seen below:
+Two additional fields that are instrumental to AutoDroid are the ```devices``` and ```apps``` fields. These fields define the adb device ID for the device(s) being targeted (a list of strings) and the application reverse domain notation name (i.e. ```com.example.application```) for the applications being targeted on the device (a list of strings). Both of these fields can be empty, a list of strings, or defined as ```*``` where all available devices and apps will be targeted. In the backend the way this works is when a value is provided in these fields the program will loop through all commands in order for each application on each device. An example of specifying a specific device and app can be seen below:
 
 ```json
 {
@@ -59,7 +59,7 @@ Two additional fields that are instrumental to AutoDroid are the ```devices``` a
 }
 ```
 
-When the devices fields is not empty (i.e. not ```"devices":[],```) a variable (see below) of ```!device_id``` is created. This variable can be used in your commands to denote the ADB device ID for the current targeted device. Similarly the variables ```!app_id```, and ```!app_path``` are added when the app field is not empty and can be used in commands to define the app reverse domain notation name and the path to that application's APK file.
+When the devices field is not empty (i.e. not ```"devices":[],```) a variable (see below) of ```!device_id``` is created. This variable can be used in your commands to denote the ADB device ID for the current targeted device. Similarly the variables ```!app_id```, and ```!app_path``` are added when the app field is not empty and can be used in commands to define the app reverse domain notation name and the path to that application's APK file.
 
 # Variables
 To save time, AutoDroid allows for an infinite amount of variables to be set in a script. These variables are constructed in a key value pair format. When the key of a variable is located in a command it will be replaced for the value. An example configuration that utilises variables can be seen below, in this configuration file the variable ```!test``` has been added as short hand for a ```monkey``` adb command and the built-in variable ```!app_id``` is also used. 
@@ -92,7 +92,7 @@ AutoDroid has built in functionality to run Frida JavaScript files as part of an
 ***note*** while the Frida integration is implemented, it is currently untested. 
 
 ## AndroGuard 
-AutoDroid supports reverse engineering APKs via AndroGuard. This constant is structures as ```reverse:``` and takes a path to a locally stored APK. 
+AutoDroid supports reverse engineering APKs via AndroGuard. This constant is structured as ```reverse:``` and takes a path to a locally stored APK. 
 
 ```json
 {
@@ -114,7 +114,7 @@ This constant provides simple functionality for pausing execution of the tooling
 ```
 
 ## Block
-The block constant provides simple looping and call-back functionality. This constant is structures as ```block:``` followed by the name of the block of commands to execute. If no blocks have been provided in the config then use ```main```.
+The block constant provides simple looping and call-back functionality. This constant is structured as ```block:``` followed by the name of the block of commands to execute. If no blocks have been provided (i.e. commands have been provided in a list format), then commands are added to a block called ```main```.
 
 ```json 
 {
