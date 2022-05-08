@@ -1,10 +1,5 @@
 {
   "devices": ["*"],
     "apps": ["*"],
-    "variables": {},
-    "commands": {
-      "begining": ["adb -s !device_id shell monkey -p !app_id 1"],
-      "middle": ["adb pull !app_path !app_id.apk"],
-      "again": ["block:begining"]
-    }
+    "commands": ["adb pull !app_path !app_id.apk","reverse: !app_id.apk"]
 }
