@@ -92,7 +92,7 @@ AutoDroid has built in functionality to run Frida JavaScript files as part of an
 ***note*** while the Frida integration is implemented, it is currently untested. 
 
 ## AndroGuard 
-AutoDroid supports reverse engineering APKs via AndroGuard. This constant is structured as ```reverse:``` and takes a path to a locally stored APK. 
+AutoDroid supports reverse engineering APKs via AndroGuard. This constant is structured as ```reverse:``` and takes a path to a locally stored APK. Using this will save an unbundled version of the APK as a ZIP with the name ```<application name>.apk```.
 
 ```json
 {
@@ -102,7 +102,19 @@ AutoDroid supports reverse engineering APKs via AndroGuard. This constant is str
 }
 ```
 
-When using the reverse constant the apk path can be followed by any number of paramiters (seperated by a ```;```), these including ```info``` (which will save a Json file of application information, ```decompile``` (which on Linux will save a txt summary of the decompiled methods), ```manifest``` (which will save the xml manifest file, and ```zip``` which will perform the same action as if no paramiters were provided and saves the unbundled APK to a zip file.
+When using the reverse constant the apk path can be followed by any number of paramiters (seperated by a ```;```), these including ```info``` (which will save a Json file of application information, ```decompile``` (which on Linux will save a txt summary of the decompiled methods), ```manifest``` (which will save the xml manifest file, and ```zip``` which will perform the same action as if no paramiters were provided and saves the unbundled APK to a zip file. An example of using these parameters can be seen below:
+
+```json
+{
+  "devices": ["*"],
+    "apps": ["*"],
+    "commands": {
+      "get_app": ["adb pull !app_path !app_id.apk"],
+      "reverse_app":["reverse: !app_id.apk;info",
+                     "reverse: !app_id.apk;manifest;decompile"]
+    }
+}
+```
 
 ## Sleep 
 This constant provides simple functionality for pausing execution of the tooling for a specific amount of time. This constant is structured as ```sleep:``` followed by the amount of seconds to wait.
