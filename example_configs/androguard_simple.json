@@ -1,0 +1,5 @@
+{
+  "devices": ["*"],
+    "apps": ["*"],
+    "commands": ["adb pull !app_path !app_id.apk","reverse: !app_id.apk"]
+}

@@ -1,0 +1,8 @@
+{
+  "devices": ["*"],
+    "apps": ["*"],
+    "commands": {
+      "test_user_input":["adb shell monkey -v 5 -p !app_id"],
+      "retrieve_apk":["adb pull !app_path !app_id.apk","sleep:5"]
+    }
+}

@@ -1,0 +1,9 @@
+{
+  "devices": ["*"],
+    "apps": ["*"],
+    "commands": {
+      "get_app": ["adb pull !app_path !app_id.apk"],
+      "reverse_app":["reverse: !app_id.apk;info",
+                     "reverse: !app_id.apk;manifest;decompile"]
+    }
+}

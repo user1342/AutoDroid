@@ -1,0 +1,6 @@
+{
+  "devices": ["*"],
+    "apps": ["*"],
+    "variables": {"!test": "adb shell monkey -v 500 -p"},
+    "commands": ["!test !app_id"]
+}
