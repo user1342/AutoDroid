@@ -7,13 +7,13 @@
 
 <br>
 
-AutoDroid is a Python tool for programatically scripting bulk interactions with an Android device, possibly use cases include:
+AutoDroid is a Python tool for programmatically scripting bulk interactions with an Android device, possibly use cases include:
 - Downloading and extracting all APKs from all connected devices.
 - Testing a developed application on a multiple devices at once.
 - Testing potential malware against a suite of AV products.
 
 # Getting Started
-First things first you will need to install the dependancies of AutoDroid, these are specified in the requirements file and can be installed by following the below command.
+First things first you will need to install the dependencies of AutoDroid, these are specified in the requirements file and can be installed by following the below command.
 
 ```bash
 pip install -r REQUIREMENTS.txt
@@ -29,7 +29,7 @@ AutoDroid needs to be provided a valid Json configuration file as a command line
 }
 ```
 
-Once you have created a valid AutoDroid configuration file you can begin device interaction by running the ```AutoDroid.py``` python file with the configuration file as it's command line paramiter.
+Once you have created a valid AutoDroid configuration file you can begin device interaction by running the ```AutoDroid.py``` python file with the configuration file as it's command line parameter.
 
 ```bash
 python AutoDroid.py config.json
@@ -49,7 +49,7 @@ The AutoDroid configuration file can be provided with a series of commands to ex
 ```
 
 # Devices and apps
-Two additional fields that are instramental to AutoDroid are the ```devices``` and ```apps``` fields. These fields define the adb device ID for the device(s) being targeted (a list of strings) and the application reverse domain notation name (i.e. ```com.example.application```) for the applications provided (a list of strings). Both of these fields can be empty or defined as ```*``` where all available devices and apps will be targeted. In the backend the way this works is when a value is provided in these fields the program will loop through all commands in order for each application on each device. An example of specifiying a specific device and app can be seen below:
+Two additional fields that are instrumental to AutoDroid are the ```devices``` and ```apps``` fields. These fields define the adb device ID for the device(s) being targeted (a list of strings) and the application reverse domain notation name (i.e. ```com.example.application```) for the applications provided (a list of strings). Both of these fields can be empty or defined as ```*``` where all available devices and apps will be targeted. In the backend the way this works is when a value is provided in these fields the program will loop through all commands in order for each application on each device. An example of specifying a specific device and app can be seen below:
 
 ```json
 {
@@ -62,7 +62,7 @@ Two additional fields that are instramental to AutoDroid are the ```devices``` a
 When the devices fields is not empty (i.e. ```"devices":[],```) a variable (see below) of ```!device_id``` is created. This variable can be used in your commands to denote the ADB device ID for the current targeted device. Similarly the variables ```!app_id```, and ```!app_path``` are added when the app field is not empty and can be used in commands to define the app reverse domain notation name and the path to that application's APK file.
 
 # Variables
-To save time, AutoDroid allows for an infinate amount of variables to be set in a script. These variables can be throught of as wildcards and are constructed in a key value pair format. When the key of a variable is located in a command it will be replaced for the value. An example configuration that utilises variables can be seen below, in this configuration file the variable ```!test``` has been added as short hand for a ```monkey``` adb command and the built-in variable ```!app_id``` is also used. 
+To save time, AutoDroid allows for an infinite amount of variables to be set in a script. These variables can be thought of as wildcards and are constructed in a key value pair format. When the key of a variable is located in a command it will be replaced for the value. An example configuration that utilises variables can be seen below, in this configuration file the variable ```!test``` has been added as short hand for a ```monkey``` adb command and the built-in variable ```!app_id``` is also used. 
 
 ```json
 {
@@ -73,13 +73,13 @@ To save time, AutoDroid allows for an infinate amount of variables to be set in 
 }
 ```
 
-The preffered standard for using variables is to presede them with a ```!``` and to use ```_``` instead of spaces. The following variables are reserved and should not be included in your configuration file: ```!device_id```, ```!app_id```, and ```!app_path```. 
+The preferred standard for using variables is to precede them with a ```!``` and to use ```_``` instead of spaces. The following variables are reserved and should not be included in your configuration file: ```!device_id```, ```!app_id```, and ```!app_path```. 
 
 # Constants
-Constants are commands specific to AutoDroid and relate to specific functionality. Normally broken down into a keyword followed by a ```:``` and then one or more variables delimiated by a ```;``. These constants must be used at the start of a command and should always be in lower case. Examples will be given in the individual setions.
+Constants are commands specific to AutoDroid and relate to specific functionality. Normally broken down into a keyword followed by a ```:``` and then one or more variables delimited by a ```;``. These constants must be used at the start of a command and should always be in lower case. Examples will be given in the individual sections.
 
 ## Frida 
-AutoDroid has built in functionality to run Frida JavaScript files as part of an AutoDroid run. This constant is defined as ```frida:``` and must be provided the path to the Javascript file being used, followed by a ```;``` and then the application reverse notation name of the application being targeted. In addition to applying variables to the command, variables are also applied to the contents of the file provided. 
+AutoDroid has built in functionality to run Frida JavaScript files as part of an AutoDroid run. This constant is defined as ```frida:``` and must be provided the path to the JavaScript file being used, followed by a ```;``` and then the application reverse notation name of the application being targeted. In addition to applying variables to the command, variables are also applied to the contents of the file provided. 
 
 ```json
 {
@@ -89,7 +89,7 @@ AutoDroid has built in functionality to run Frida JavaScript files as part of an
 }
 ```
 
-***note*** while the Frida itegration is implemented, it is currently untested. 
+***note*** while the Frida integration is implemented, it is currently untested. 
 
 ## AndroGuard 
 AutoDroid supports reverse engineering APKs via AndroGuard. This constant is structures as ```reverse:``` and takes a path to a locally stored APK. 
@@ -114,7 +114,7 @@ This constant provides simple functionality for pausing execution of the tooling
 ```
 
 ## Block
-The block constant provides simple looping and callback functionality. This constant is structures as ```block:``` followed by the name of the block of commands to execute. If no blocks have been provided in the config then use ```main```.
+The block constant provides simple looping and call-back functionality. This constant is structures as ```block:``` followed by the name of the block of commands to execute. If no blocks have been provided in the config then use ```main```.
 
 ```json 
 {
