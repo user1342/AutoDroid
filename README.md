@@ -102,6 +102,8 @@ AutoDroid supports reverse engineering APKs via AndroGuard. This constant is str
 }
 ```
 
+When using the reverse constant the apk path can be followed by any number of paramiters (seperated by a ```;```), these including ```info``` (which will save a Json file of application information, ```decompile``` (which on Linux will save a txt summary of the decompiled methods), ```manifest``` (which will save the xml manifest file, and ```zip``` which will perform the same action as if no paramiters were provided and saves the unbundled APK to a zip file.
+
 ## Sleep 
 This constant provides simple functionality for pausing execution of the tooling for a specific amount of time. This constant is structured as ```sleep:``` followed by the amount of seconds to wait.
 
