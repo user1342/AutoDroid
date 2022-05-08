@@ -141,7 +141,7 @@ The below is an example of using AutoDroid to test potential malware on Android 
       "install_eicar":["adb install com.fsecure.eicar.antivirus.test.apk"],
       "user_input":["adb shell monkey -p com.fsecure.eicar.antivirus.test -v 1","sleep: 20"],
       "uninstall": ["adb uninstall com.fsecure.eicar.antivirus.test"],
-      "get video": ["adb pull /data/local/tmp/test.mp4", "sleep: 20","adb shell rm /data/local/tmp/test.mp4"]
+      "get_video": ["adb pull /data/local/tmp/test.mp4", "sleep: 20","adb shell rm /data/local/tmp/test.mp4"]
     }
 }
 ```
