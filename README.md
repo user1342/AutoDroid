@@ -7,13 +7,13 @@
 
 <br>
 
-AutoDroid is a Python tool for programmatically scripting bulk interactions with an Android device, possibly use cases include:
+AutoDroid is a Python tool for programmatically scripting bulk interactions with an Android device, possible use cases include:
 - Downloading and extracting all APKs from all connected devices.
 - Testing a developed application on a multiple devices at once.
 - Testing potential malware against a suite of AV products.
 
 # Getting Started
-First things first you will need to install the dependencies of AutoDroid, these are specified in the requirements file and can be installed by following the below command.
+To use AutoDroid you will need to install the dependencies, these are specified in the requirements file and can be installed by following the below command.
 
 ```bash
 pip install -r REQUIREMENTS.txt
@@ -35,7 +35,7 @@ Once you have created a valid AutoDroid configuration file you can begin device 
 python AutoDroid.py example_config.json
 ```
 # Commands and blocks
-The AutoDroid configuration file can be provided with a series of commands to execute on the target devices, these commands are run locally on your machine and so the programs and files being called must be present. These commands can be in either a list format (as can be seen in the example above) or as a key value pair map. These key value pairs are defined as blocks of commands, where the constant (escribed below) ```block:<block name>``` can be used to run a block. An example of using blocks can be seen below.
+The AutoDroid configuration file can be provided with a series of commands to execute on the target devices, these commands are run locally on your machine and so the programs and files being called must be present. These commands can be in either a list format (as can be seen in the example above) or as a key value pair map/ dict. These key value pairs are defined as blocks of commands, where the key is the block name and the value is a list of commands. The constant (described below) ```block:<block name>``` can be used to run a block and provides a simple loop/ call-back feature. An example of using blocks can be seen below.
 
 ```json 
 {
@@ -59,10 +59,10 @@ Two additional fields that are instrumental to AutoDroid are the ```devices``` a
 }
 ```
 
-When the devices fields is not empty (i.e. ```"devices":[],```) a variable (see below) of ```!device_id``` is created. This variable can be used in your commands to denote the ADB device ID for the current targeted device. Similarly the variables ```!app_id```, and ```!app_path``` are added when the app field is not empty and can be used in commands to define the app reverse domain notation name and the path to that application's APK file.
+When the devices fields is not empty (i.e. not ```"devices":[],```) a variable (see below) of ```!device_id``` is created. This variable can be used in your commands to denote the ADB device ID for the current targeted device. Similarly the variables ```!app_id```, and ```!app_path``` are added when the app field is not empty and can be used in commands to define the app reverse domain notation name and the path to that application's APK file.
 
 # Variables
-To save time, AutoDroid allows for an infinite amount of variables to be set in a script. These variables can be thought of as wildcards and are constructed in a key value pair format. When the key of a variable is located in a command it will be replaced for the value. An example configuration that utilises variables can be seen below, in this configuration file the variable ```!test``` has been added as short hand for a ```monkey``` adb command and the built-in variable ```!app_id``` is also used. 
+To save time, AutoDroid allows for an infinite amount of variables to be set in a script. These variables are constructed in a key value pair format. When the key of a variable is located in a command it will be replaced for the value. An example configuration that utilises variables can be seen below, in this configuration file the variable ```!test``` has been added as short hand for a ```monkey``` adb command and the built-in variable ```!app_id``` is also used. 
 
 ```json
 {
