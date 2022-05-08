@@ -79,35 +79,53 @@ The preffered standard for using variables is to presede them with a ```!``` and
 Constants are commands specific to AutoDroid and relate to specific functionality. Normally broken down into a keyword followed by a ```:``` and then one or more variables delimiated by a ```;``. These constants must be used at the start of a command and should always be in lower case. Examples will be given in the individual setions.
 
 ## Frida 
-
-## AndroGuard 
-
-## Sleep 
-
-## Block
-
-
-An example config can be seen below:
+AutoDroid has built in functionality to run Frida JavaScript files as part of an AutoDroid run. This constant is defined as ```frida:``` and must be provided the path to the Javascript file being used, followed by a ```;``` and then the application reverse notation name of the application being targeted. In addition to applying variables to the command, variables are also applied to the contents of the file provided. 
 
 ```json
 {
   "devices": ["*"],
     "apps": ["*"],
-    "variables": {},
-    "commands": {
-      "begining": ["adb -s !device_id shell monkey -p !app_id 1"],
-      "middle": ["adb  -s !device pull !app_path !app_id.apk"],
-      "end": ["reverse: !app_id.apk"],
-      "again": ["block:begining"]
-    }
+    "commands": ["frida:myJavascript.js;!app_id"]
 }
-
 ```
 
+***note*** while the Frida itegration is implemented, it is currently untested. 
 
-### Config fields
-The Json config contains several paramiters for configuring an interaction with a device.
-- apps - This field defines what applications the tooling targets. This can be empty, a list of reverse notation paths such as ```com.example.application```, or ```*``` which will target all applications on the device. When using this the ```app_path``` and ```app_id``` variables are added to the variable list.
-- devices - This field defines what devices the tooling targets over adb. This can be empty, a list of device IDs, or ```*``` which will target all connected devices. When using this the ```!device_id``` variable is added to variables and can be used to access the device id.
-- variables - This is a map of key value pairs. During execution of commands all keys will be replaced with their values. I.e. adding ```{"!script":"ls"}``` will replace the ```!script``` string with ```ls``` in all commands.  
-- commands - A dictionary or list of blocks to be executed. If a list is provided it is defined as a block with name ```name```. Outside of this a map can be provided with keys for the command block name and the value being a list of commands to execute. In addition to this a command can be started with ```block:``` to run anouther block provided after the ```:```, ```reverse:``` to run AndroGuard on an APK on the path after the ```:```, and ```Frida:``` followed by the Javascript file a ```;``` and the package name to use a frida javascript script.
+## AndroGuard 
+AutoDroid supports reverse engineering APKs via AndroGuard. This constant is structures as ```reverse:``` and takes a path to a locally stored APK. 
+
+```json
+{
+  "devices": ["*"],
+    "apps": ["*"],
+    "commands": ["adb pull !app_path !app_id.apk","reverse: !app_id.apk"]
+}
+```
+
+## Sleep 
+This constant provides simple functionality for pausing execution of the tooling for a specific amount of time. This constant is structured as ```sleep:``` followed by the amount of seconds to wait.
+
+```json
+{
+  "devices": ["*"],
+    "apps": ["*"],
+    "commands": ["adb pull !app_path !app_id.apk","sleep:5"]
+}
+```
+
+## Block
+The block constant provides simple looping and callback functionality. This constant is structures as ```block:``` followed by the name of the block of commands to execute. If no blocks have been provided in the config then use ```main```.
+
+```json 
+{
+  "devices": ["*"],
+    "apps": ["*"],
+    "commands": {
+      "test_user_input":["adb shell monkey -v 5 -p !app_id"],
+      "retrieve_apk":["adb pull !app_path !app_id.apk"],
+      "test_again": ["block: test_user_input","sleep:5"]
+    }
+}
+```
+
+# More complex configs
