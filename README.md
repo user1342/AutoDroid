@@ -176,6 +176,7 @@ The below is an example of using AutoDroid's implementation of AndroGuard to rev
 
 # More on AutoDroid
 Get the free official read me and cheat sheet here: https://ko-fi.com/s/66735cc6a0
+Read an article on bulk reverse engineering Android applications here: https://www.jamesstevenson.me/bulk-android-app-reverse-engineering-with-autodroid/
 
 # 📜 License
 [GNU General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/)
