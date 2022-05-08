@@ -295,7 +295,7 @@ class AndroidInterface():
             raise Exception("ADB not available")
 
 if __name__ == "__main__":
-    if len(sys.argv) > 0:
+    if len(sys.argv) > 1:
         device_manager = AndroidInterface()
         device_manager.run(sys.argv[1])
     else:
