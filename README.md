@@ -146,6 +146,20 @@ The below is an example of using AutoDroid to test potential malware on Android 
 }
 ```
 
+## Application reverse engineering
+The below is an example of using AutoDroid's implementation of AndroGuard to reverse engineering an APK off a device and retrieve a json of info about the app, a decompiled summary of methods, the xml manifest file, and an unbundled zip file of the APK.
+
+'''json
+{
+  "devices": ["*"],
+    "apps": ["me.jamesstevenson.onelist"],
+    "commands": {
+      "get_app": ["adb pull !app_path !app_id.apk"],
+      "reverse_app":["reverse: !app_id.apk;info;decompile;manifest;zip"]
+    }
+}
+'''
+
 # More on AutoDroid
 Get the free official read me and cheat sheet here: https://ko-fi.com/s/66735cc6a0
 
