@@ -9,7 +9,7 @@
 
 AutoDroid is a Python tool for programmatically scripting bulk interactions with an Android device. Possible uses include:
 - Downloading and extracting all APKs from all connected devices. ⚙️
-- Testing a developed application on a multiple devices at once. 📲
+- Testing a developed application on multiple devices at once. 📲
 - Testing potential malware against a suite of AV products. ☢️
 
 # 💪 Getting Started
