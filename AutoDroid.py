@@ -118,103 +118,106 @@ class AndroidInterface():
         :param blocks_dict: The dictionary of all blocks.
         '''
         for command in block_list:
-            if command.startswith("block:"):
-                command = command.replace("block:", "")
-                command = command.strip()
-                self._execute_block(blocks_dict[command], blocks_dict)
+            try:
+                if command.startswith("block:"):
+                    command = command.replace("block:", "")
+                    command = command.strip()
+                    self._execute_block(blocks_dict[command], blocks_dict)
 
-            elif command.startswith("sleep:"):
-                command = self._construct_command(command)
-                time_to_sleep = command.replace("sleep:", "").strip()
-                time.sleep(int(time_to_sleep))
+                elif command.startswith("sleep:"):
+                    command = self._construct_command(command)
+                    time_to_sleep = command.replace("sleep:", "").strip()
+                    time.sleep(int(time_to_sleep))
 
-            elif command.startswith("frida:"):
-                command = self._construct_command(command)
-                frida_command = command.replace("frida:", "").strip()
-                java_script_code_path, package_name = frida_command.split(";")
+                elif command.startswith("frida:"):
+                    command = self._construct_command(command)
+                    frida_command = command.replace("frida:", "").strip()
+                    java_script_code_path, package_name = frida_command.split(";")
 
-                def my_message_handler(message, payload):
-                    print(message)
-                    print(payload)
+                    def my_message_handler(message, payload):
+                        print(message)
+                        print(payload)
 
-                # Opens a session with the device/ process/ gaget
-                session = frida.get_usb_device().attach(package_name)
+                    # Opens a session with the device/ process/ gaget
+                    session = frida.get_usb_device().attach(package_name)
 
-                # Reads and executes the javascript code
-                with open(java_script_code_path) as f:
-                    file_data = self._construct_command(f.read())
-                    script = session.create_script(file_data)
-                script.on("message", my_message_handler)
-                script.load()
+                    # Reads and executes the javascript code
+                    with open(java_script_code_path) as f:
+                        file_data = self._construct_command(f.read())
+                        script = session.create_script(file_data)
+                    script.on("message", my_message_handler)
+                    script.load()
 
-            elif command.startswith("reverse:"):
-                command = self._construct_command(command)
-                command = command.replace("reverse:", "").strip()
-                if ";" not in command:
-                    apk_path = command
-                    a, d, dx = AnalyzeAPK(apk_path)
-                    a.new_zip("{}.zip".format(apk_path))
-                else:
-                    path, *params = command.split(";")
-                    path = path.strip()
-                    a, d, dx = AnalyzeAPK(path)
+                elif command.startswith("reverse:"):
+                    command = self._construct_command(command)
+                    command = command.replace("reverse:", "").strip()
+                    if ";" not in command:
+                        apk_path = command
+                        a, d, dx = AnalyzeAPK(apk_path)
+                        a.new_zip("{}.zip".format(apk_path))
+                    else:
+                        path, *params = command.split(";")
+                        path = path.strip()
+                        a, d, dx = AnalyzeAPK(path)
 
-                    for param in params:
-                        param = param.strip()
-                        if param == "info":
+                        for param in params:
+                            param = param.strip()
+                            if param == "info":
 
-                            info_data = {
-                                "package_name":a.get_app_name(),
-                                "package":a.get_package(),
-                                "icon":a.get_app_icon(),
-                                "permissions":a.get_permissions(),
-                                "activities":a.get_activities(),
-                                "android_version_code":a.get_androidversion_code(),
-                                "android_version_name":a.get_androidversion_name(),
-                                "min_sdk_version":a.get_min_sdk_version(),
-                                "max_sdk_version":a.get_max_sdk_version(),
-                                "target_sdk_version":a.get_target_sdk_version(),
-                                "effective_sdk_version":a.get_effective_target_sdk_version()
-                            }
+                                info_data = {
+                                    "package_name":a.get_app_name(),
+                                    "package":a.get_package(),
+                                    "icon":a.get_app_icon(),
+                                    "permissions":a.get_permissions(),
+                                    "activities":a.get_activities(),
+                                    "android_version_code":a.get_androidversion_code(),
+                                    "android_version_name":a.get_androidversion_name(),
+                                    "min_sdk_version":a.get_min_sdk_version(),
+                                    "max_sdk_version":a.get_max_sdk_version(),
+                                    "target_sdk_version":a.get_target_sdk_version(),
+                                    "effective_sdk_version":a.get_effective_target_sdk_version()
+                                }
 
-                            with open('{}-apk-info.json'.format(path), 'w') as outfile:
-                                json.dump(info_data, outfile, indent=4)
+                                with open('{}-apk-info.json'.format(path), 'w') as outfile:
+                                    json.dump(info_data, outfile, indent=4)
 
-                        if param == "decompile":
-                            if platform.system() != "Windows":
-                                apk_info_file = open("{}-decompiled.txt".format(path), "w")
+                            if param == "decompile":
+                                if platform.system() != "Windows":
+                                    apk_info_file = open("{}-decompiled.txt".format(path), "w")
 
-                                a2 = APK(path)
+                                    a2 = APK(path)
 
-                                # Create DalvikVMFormat Object
-                                d = DalvikVMFormat(a2)
-                                # Create Analysis Object
-                                dx = Analysis(d)
-                                decompiler = DecompilerJADX(d, dx)
+                                    # Create DalvikVMFormat Object
+                                    d = DalvikVMFormat(a2)
+                                    # Create Analysis Object
+                                    dx = Analysis(d)
+                                    decompiler = DecompilerJADX(d, dx)
 
-                                # propagate decompiler and analysis back to DalvikVMFormat
-                                d.set_decompiler(decompiler)
+                                    # propagate decompiler and analysis back to DalvikVMFormat
+                                    d.set_decompiler(decompiler)
 
-                                # Now you can do stuff like:
-                                for m in d.get_methods():
-                                    apk_info_file.write("\n--\n{}\n{}".format(m,decompiler.get_source_method(m)))
+                                    # Now you can do stuff like:
+                                    for m in d.get_methods():
+                                        apk_info_file.write("\n--\n{}\n{}".format(m,decompiler.get_source_method(m)))
 
+                                    apk_info_file.close()
+                                else:
+                                    print("Warning: Decompile not available on Windows")
+
+                            if param == "manifest":
+                                manifest = a.get_android_manifest_axml().get_xml()
+                                apk_info_file = open("{}-AndroidManifest.xml".format(path), "wb")
+                                apk_info_file.write(manifest)
                                 apk_info_file.close()
-                            else:
-                                print("Warning: Decompile not available on Windows")
 
-                        if param == "manifest":
-                            manifest = a.get_android_manifest_axml().get_xml()
-                            apk_info_file = open("{}-AndroidManifest.xml".format(path), "wb")
-                            apk_info_file.write(manifest)
-                            apk_info_file.close()
+                            if param == "zip":
+                                a.new_zip("{}.zip".format(path))
 
-                        if param == "zip":
-                            a.new_zip("{}.zip".format(path))
-
-            else:
-                formatted_command = self._construct_command(command)
-                self._execute_command(formatted_command)
+                else:
+                    formatted_command = self._construct_command(command)
+                    self._execute_command(formatted_command)
+            except:
+                print("Warning: Command {} failed".format(command))
 
     def _execute_command(self, command):
         """
@@ -268,7 +271,6 @@ class AndroidInterface():
                     self._using_apps = True
                 else:
                     self._using_apps = False
-
 
                 for app in apps:
                     self._variables["!app_id"] = app
