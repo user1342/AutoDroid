@@ -236,7 +236,7 @@ class AndroidInterface():
 
     def _construct_command(self, command):
         '''
-        A function for replacing all defined variable/ wildcards in the command
+        A funaction for replacing all defined variable/ wildcards in the command
         :param command:
         :return: a command that has been replaced with the provided variables/ wildcards
         '''
@@ -252,6 +252,9 @@ class AndroidInterface():
         :param apps: a list of applications being targeted.
         :param blocks: a list of command blocks.
         '''
+
+        # set default variales
+        self._variables["!adb_connect"] = "adb -s !device_id"
 
         # If using devices and apps, have a nested loop and set the variables
         if self._using_devices and self._using_apps:
@@ -299,6 +302,9 @@ class AndroidInterface():
             for app in apps:
                 self._variables["!app_id"] = app
                 self._execute_blocks(blocks)
+        # if not using devices or apps, just run blocks
+        else:
+            self._execute_blocks(blocks)
 
     def _read_config(self, config_file_path):
         '''
