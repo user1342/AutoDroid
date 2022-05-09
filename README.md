@@ -42,8 +42,8 @@ The AutoDroid configuration file can be provided with a series of commands to ex
   "devices": ["*"],
     "apps": ["*"],
     "commands": {
-      "test_user_input":["adb shell monkey -v 5 -p !app_id"],
-      "retrieve_apk":["adb pull !app_path !app_id.apk","sleep:5"]
+      "test_user_input":["adb -s !device_id shell monkey -v 5 -p !app_id"],
+      "retrieve_apk":["adb -s !device_id pull !app_path !app_id.apk","sleep:5"]
     }
 }
 ```
@@ -55,7 +55,7 @@ Two additional fields that are instrumental to AutoDroid are the ```devices``` a
 {
   "devices": ["09261JEC216934"],
     "apps": ["com.google.android.networkstack.tethering"],
-    "commands": ["adb pull !app_path !app_id.apk"]
+    "commands": ["adb -s !device_id pull !app_path !app_id.apk"]
 }
 ```
 
@@ -68,7 +68,7 @@ To save time, AutoDroid allows for an infinite amount of variables to be set in 
 {
   "devices": ["*"],
     "apps": ["*"],
-    "variables": {"!test": "adb shell monkey -v 500 -p"},
+    "variables": {"!test": "adb -s !device_id shell monkey -v 500 -p"},
     "commands": ["!test !app_id"]
 }
 ```
@@ -98,7 +98,7 @@ AutoDroid supports reverse engineering APKs via AndroGuard. This constant is str
 {
   "devices": ["*"],
     "apps": ["*"],
-    "commands": ["adb pull !app_path !app_id.apk","reverse: !app_id.apk"]
+    "commands": ["adb -s !device_id pull !app_path !app_id.apk","reverse: !app_id.apk"]
 }
 ```
 
@@ -109,7 +109,7 @@ When using the reverse constant the apk path can be followed by any number of pa
   "devices": ["*"],
     "apps": ["*"],
     "commands": {
-      "get_app": ["adb pull !app_path !app_id.apk"],
+      "get_app": ["adb -s !device_id pull !app_path !app_id.apk"],
       "reverse_app":["reverse: !app_id.apk;info",
                      "reverse: !app_id.apk;manifest;decompile"]
     }
