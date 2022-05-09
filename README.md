@@ -76,7 +76,7 @@ To save time, AutoDroid allows for an infinite amount of variables to be set in 
 The preferred standard for using variables is to precede them with a ```!``` and to use ```_``` instead of spaces. The following variables are reserved and should not be included in your configuration file: ```!device_id```, ```!app_id```, and ```!app_path```. 
 
 # 📢 Constants
-Constants are commands specific to AutoDroid and relate to specific functionality. Normally broken down into a keyword followed by a ```:``` and then zero or more parameters separated by a ```;```. These constants must be used at the start of a command and should always be in lower case. Examples will be given in the individual sections.
+Constants are commands specific to AutoDroid and relate to specific functionality. Normally broken down into a keyword followed by a ```:``` and then one or more parameters separated by a ```;```. These constants must be used at the start of a command and should always be in lower case. Examples will be given in the individual sections.
 
 ## Frida 
 AutoDroid has built in functionality to run Frida JavaScript files as part of an AutoDroid run. This constant is defined as ```frida:``` and must be provided the path to the JavaScript file being used, followed by a ```;``` and then the application reverse notation name of the application being targeted. In addition to applying variables to the command, variables are also applied to the contents of the file provided. 
