@@ -73,7 +73,7 @@ To save time, AutoDroid allows for an infinite amount of variables to be set in 
 }
 ```
 
-The preferred standard for using variables is to precede them with a ```!``` and to use ```_``` instead of spaces. The following variables are reserved and should not be included in your configuration file: ```!device_id```, ```!app_id```, and ```!app_path```. 
+The preferred standard for using variables is to precede them with a ```!``` and to use ```_``` instead of spaces. The following variables are reserved and should not be included in your configuration file: ```!device_id```, ```!app_id```, ```!app_path```, and ```!adb_connect```. 
 
 # 📢 Constants
 Constants are commands specific to AutoDroid and relate to specific functionality. Normally broken down into a keyword followed by a ```:``` and then one or more parameters separated by a ```;```. These constants must be used at the start of a command and should always be in lower case. Examples will be given in the individual sections.
