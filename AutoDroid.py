@@ -129,6 +129,11 @@ class AndroidInterface():
                     time_to_sleep = command.replace("sleep:", "").strip()
                     time.sleep(int(time_to_sleep))
 
+                elif command.startswith("print:"):
+                    command = self._construct_command(command)
+                    message = command.replace("print:", "").strip()
+                    print("\nMessage:\t{}\n".format(message))
+
                 elif command.startswith("frida:"):
                     command = self._construct_command(command)
                     frida_command = command.replace("frida:", "").strip()
@@ -323,10 +328,10 @@ class AndroidInterface():
             # Set devices being used
             devices = config_data["devices"]
 
-            if devices[0] == "*":
-                self._using_devices = True
-                devices = self._get_all_devices()
-            elif len(devices) > 0:
+            if len(devices) > 0:
+                if devices[0] == "*":
+                    self._using_devices = True
+                    devices = self._get_all_devices()
                 self._using_devices = True
             else:
                 self._using_devices = False
