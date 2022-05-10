@@ -171,7 +171,7 @@ Another simple constant. The ```print:``` constant can be used to print a messag
 ```
 
 ## Write
-The write constant allows for a variable or command to be written to a file. Used with the ```write:``` string followed by the file to, followed by a ```;```, and then the command or variable to write to the file.
+The write constant allows for a variable or command to be written to a file. Used with the ```write:``` string followed by the file to write to, followed by a ```;```, and then the command or variable to write to the file.
 
 ```json
 {
@@ -196,7 +196,7 @@ The ``` read:``` constant is provided a path to a file to read, followed by a ``
 ```
 
 ## Append
-Similar to write. The append constant allows for a variable or command to be written to a file. Used with the ```append:``` string followed by the file to, followed by a ```;```, and then the command or variable to write to the file. Unlike write which will create or write over an existing file, append will only add to an existing file. If the file does not exist then AutoDroid will error.
+Similar to write. The append constant allows for a variable or command to be written to a file. Used with the ```append:``` string followed by the file to write to, followed by a ```;```, and then the command or variable to write to the file. Unlike write which will create or write over an existing file, append will only add to an existing file. If the file does not exist then AutoDroid will error.
 
 ```json
 {
