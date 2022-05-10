@@ -75,6 +75,17 @@ To save time, AutoDroid allows for an infinite amount of variables to be set in 
 
 The preferred standard for using variables is to precede them with a ```!``` and to use ```_``` instead of spaces. 
 
+## Setting Variables At Runtime 
+Variables can be set at runtime using the ``` ?``` operator. Where the operator followed by a variable name is set to either what the following commands output is or if the command has no output the command itself. An example can be seen below:
+
+```json
+{
+  "devices": [],
+    "apps": [],
+    "commands": ["?!files dir", "print: !files"]
+}
+```
+
 ## Reserved Variables 
 The below is a list of reserved variables that are already used in AutoDroid and should be avoided from adding to your config file. If these variables are added they will be overwritten at runtime.
 -	```!device_id``` - When one or more devices are provided in the config, this variable is populated at runtime. And is set as the ADB device ID for the current device. Each device is looped through in turn with the configured commands being run for each device.
@@ -159,6 +170,41 @@ Another simple constant. The ```print:``` constant can be used to print a messag
 }
 ```
 
+## Write
+The write constant allows for a variable or command to be written to a file. Used with the ```write:``` string followed by the file to, followed by a ```;```, and then the command or variable to write to the file.
+
+```json
+{
+  "devices": ["*"],
+    "apps": ["*"],
+    "commands": {
+      "get_stats": ["?!stats device id !device_id, app id !app_id, app path !app_path"],
+      "write_stats": ["write: !device_id-!app_id-stats.txt;!stats"]
+    }
+}
+```
+
+## Read
+The ``` read:``` constant is provided a path to a file to read, followed by a ```;```, and then the variable to save the output to. This variable can be a newly declared or existing variable.
+
+```json
+{
+  "devices": [],
+    "apps": [],
+    "commands": ["read:test.txt;!data","print: !data"]
+}
+```
+
+## Append
+Similar to write. The append constant allows for a variable or command to be written to a file. Used with the ```append:``` string followed by the file to, followed by a ```;```, and then the command or variable to write to the file. Unlike write which will create or write over an existing file, append will only add to an existing file. If the file does not exist then AutoDroid will error.
+
+```json
+{
+  "devices": ["*"],
+    "apps": ["*"],
+    "commands": ["append:test.txt;!app_id !app_path"]
+}
+```
 
 # 📚 More complex configs
 ## Malware Analysis
