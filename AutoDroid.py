@@ -146,12 +146,31 @@ class AndroidInterface():
                     # Opens a session with the device/ process/ gaget
                     session = frida.get_usb_device().attach(package_name)
 
-                    # Reads and executes the javascript code
-                    with open(java_script_code_path) as f:
-                        file_data = self._construct_command(f.read())
-                        script = session.create_script(file_data)
-                    script.on("message", my_message_handler)
-                    script.load()
+                elif command.startswith("write:"):
+                    command = self._construct_command(command)
+                    frida_command = command.replace("write:", "").strip()
+                    path, data_to_write = frida_command.split(";")
+                    file_to_write = open(path,"w")
+                    file_to_write.write(data_to_write)
+                    file_to_write.close()
+
+                elif command.startswith("append:"):
+                    command = self._construct_command(command)
+                    frida_command = command.replace("append:", "").strip()
+                    path, data_to_write = frida_command.split(";")
+                    file_to_write = open(path,"a")
+                    file_to_write.write(data_to_write+"\n")
+                    file_to_write.close()
+
+                elif command.startswith("read:"):
+                    command = self._construct_command(command)
+                    command = command.replace("read:", "").strip()
+                    path, variable = command.split(";")
+                    file_to_read= open(path,"r")
+                    contents = file_to_read.readlines()
+                    contents = "\n".join(contents)
+                    self._variables[variable] = contents
+                    file_to_read.close()
 
                 elif command.startswith("reverse:"):
                     command = self._construct_command(command)
@@ -218,11 +237,28 @@ class AndroidInterface():
                             if param == "zip":
                                 a.new_zip("{}.zip".format(path))
 
+                # use to set variables at runtime
+                elif command.startswith("?"):
+                    variable, command = command.split(" ", 1)
+                    variable = variable.replace("?","")
+                    formatted_command = self._construct_command(command)
+                    command_result = self._execute_command(formatted_command)
+                    result = ""
+                    for line in command_result:
+                        result = result + line.decode()
+                        command_result = result
+
+                    if command_result == None or command_result == []:
+                        command_result = formatted_command
+
+                    self._variables[variable] = command_result
+
                 else:
                     formatted_command = self._construct_command(command)
                     self._execute_command(formatted_command)
+
             except:
-                print("Warning: Command {} failed".format(command))
+                print("Command {} failed".format(command))
 
     def _execute_command(self, command):
         """
@@ -259,7 +295,8 @@ class AndroidInterface():
         '''
 
         # set default variales
-        self._variables["!adb_connect"] = "adb -s !device_id"
+        if self._using_devices:
+            self._variables["!adb_connect"] = "adb -s !device_id"
 
         # If using devices and apps, have a nested loop and set the variables
         if self._using_devices and self._using_apps:
