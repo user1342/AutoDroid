@@ -149,6 +149,19 @@ The block constant provides simple looping and call-back functionality. This con
 }
 ```
 
+## Print
+Another simple constant. The ```print:``` constant can be used to print a message to the console. An example of using this can be seen below:
+```json 
+{
+  "devices": ["*"],
+    "apps": ["*"],
+    "commands": {
+      "get_app": ["print: device id !device_id, app id !app_id, app path !app_path"]
+    }
+}
+```
+
+
 # 📚 More complex configs
 ## Malware Analysis
 The below is an example of using AutoDroid to test potential malware on Android devices. This config installs the potential malware, records the screen, retrieves the screen capture, and uninstalls the application.
