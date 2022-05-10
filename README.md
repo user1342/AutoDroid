@@ -155,9 +155,7 @@ Another simple constant. The ```print:``` constant can be used to print a messag
 {
   "devices": ["*"],
     "apps": ["*"],
-    "commands": {
-      "get_app": ["print: device id !device_id, app id !app_id, app path !app_path"]
-    }
+    "commands": ["print: device id !device_id, app id !app_id, app path !app_path"]
 }
 ```
 
