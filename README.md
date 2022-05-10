@@ -207,7 +207,7 @@ Similar to write. The append constant allows for a variable or command to be wri
 ```
 
 # 📚 More complex configs
-## Malware Analysis
+## Malware analysis
 The below is an example of using AutoDroid to test potential malware on Android devices. This config installs the potential malware, records the screen, retrieves the screen capture, and uninstalls the application.
 
 ```json 
