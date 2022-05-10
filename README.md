@@ -75,7 +75,7 @@ To save time, AutoDroid allows for an infinite amount of variables to be set in 
 
 The preferred standard for using variables is to precede them with a ```!``` and to use ```_``` instead of spaces. 
 
-## Setting Variables At Runtime 
+## Setting variables at runtime 
 Variables can be set at runtime using the ``` ?``` operator. Where the operator followed by a variable name is set to either what the following commands output is or if the command has no output the command itself. An example can be seen below:
 
 ```json
@@ -86,7 +86,7 @@ Variables can be set at runtime using the ``` ?``` operator. Where the operator 
 }
 ```
 
-## Reserved Variables 
+## Reserved variables 
 The below is a list of reserved variables that are already used in AutoDroid and should be avoided from adding to your config file. If these variables are added they will be overwritten at runtime.
 -	```!device_id``` - When one or more devices are provided in the config, this variable is populated at runtime. And is set as the ADB device ID for the current device. Each device is looped through in turn with the configured commands being run for each device.
 -	```!adb_connect``` – This is a shorthand variable that translates to ```adb -s !device_id```, using this instead of ```adb``` will insure that all adb commands are run on the correct device.
@@ -224,7 +224,7 @@ The below is an example of using AutoDroid to test potential malware on Android 
 }
 ```
 
-## Application Reverse Engineering
+## Application reverse engineering
 The below is an example of using AutoDroid's implementation of AndroGuard to reverse engineering an APK off a device and retrieve a json of info about the app, a decompiled summary of methods, the xml manifest file, and an unbundled zip file of the APK.
 
 ```json
