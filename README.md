@@ -73,7 +73,14 @@ To save time, AutoDroid allows for an infinite amount of variables to be set in 
 }
 ```
 
-The preferred standard for using variables is to precede them with a ```!``` and to use ```_``` instead of spaces. The following variables are reserved and should not be included in your configuration file: ```!device_id```, ```!app_id```, ```!app_path```, and ```!adb_connect```. 
+The preferred standard for using variables is to precede them with a ```!``` and to use ```_``` instead of spaces. 
+
+## Reserved Variables 
+The below is a list of reserved variables that are already used in AutoDroid and should be avoided from adding to your config file. If these variables are added they will be overwritten at runtime.
+-	```!device_id``` - When one or more devices are provided in the config, this variable is populated at runtime. And is set as the ADB device ID for the current device. Each device is looped through in turn with the configured commands being run for each device.
+-	```!adb_connect``` – This is a shorthand variable that translates to ```adb -s !device_id```, using this instead of ```adb``` will insure that all adb commands are run on the correct device.
+-	```!app_id``` - When one or more apps are provided in the config, this variable is populated at runtime. And is set as the application reverse domain notation name (i.e. ```com.example.myapplication```) for the current application. Each application is looped through in turn with the configured commands being run for each app.
+-	```!app_path``` - Similar to the above. When one or more apps are provided in the config, this variable is populated at runtime. And is set as the path to the current application APK file on the target device. Each application is looped through in turn with the configured commands being run for each app.
 
 # 📢 Constants
 Constants are commands specific to AutoDroid and relate to specific functionality. Normally broken down into a keyword followed by a ```:``` and then one or more parameters separated by a ```;```. These constants must be used at the start of a command and should always be in lower case. Examples will be given in the individual sections.
