@@ -172,7 +172,7 @@ class AndroidInterface():
                     found_strings = dx.find_strings(string_to_find) #Find strings by regex
 
                     for found_string in found_strings:
-                        found_string = found_string.strip()
+                        found_string = str(found_string).strip()
                         print("'find' command hit target in app '{}' of value '{}'".format(apk_path,found_string))
 
                         if os.path.isfile("find_output.txt"):
