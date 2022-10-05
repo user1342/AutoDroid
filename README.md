@@ -160,6 +160,17 @@ The block constant provides simple looping and call-back functionality. This con
 }
 ```
 
+## Find
+The keyword 'find' followed by a path to an apk and a regex string to find will both print to the console the path to the apk and the string found if they are present in an APK. This can be used in conjunction with other commands to run the find strings in all processed apps. An example of this can be seen below:
+
+```json
+{
+  "devices": ["*"],
+    "apps": ["*"],
+    "commands": ["adb.exe pull !app_path !app_id.apk","find: !app_id.apk;ACCESSIBILITY"]
+}
+```
+
 ## Print
 Another simple constant. The ```print:``` constant can be used to print a message to the console. An example of using this can be seen below:
 ```json 
