@@ -1,4 +1,5 @@
 import json
+import os
 import platform
 import subprocess
 import sys
@@ -136,8 +137,8 @@ class AndroidInterface():
 
                 elif command.startswith("frida:"):
                     command = self._construct_command(command)
-                    frida_command = command.replace("frida:", "").strip()
-                    java_script_code_path, package_name = frida_command.split(";")
+                    command_word = command.replace("frida:", "").strip()
+                    java_script_code_path, package_name = command_word.split(";")
 
                     def my_message_handler(message, payload):
                         print(message)
@@ -148,19 +149,40 @@ class AndroidInterface():
 
                 elif command.startswith("write:"):
                     command = self._construct_command(command)
-                    frida_command = command.replace("write:", "").strip()
-                    path, data_to_write = frida_command.split(";")
+                    command_word = command.replace("write:", "").strip()
+                    path, data_to_write = command_word.split(";")
                     file_to_write = open(path,"w")
                     file_to_write.write(data_to_write)
                     file_to_write.close()
 
                 elif command.startswith("append:"):
                     command = self._construct_command(command)
-                    frida_command = command.replace("append:", "").strip()
-                    path, data_to_write = frida_command.split(";")
+                    command_word = command.replace("append:", "").strip()
+                    path, data_to_write = command_word.split(";")
                     file_to_write = open(path,"a")
                     file_to_write.write(data_to_write+"\n")
                     file_to_write.close()
+
+                elif command.startswith("find:"):
+                    command = self._construct_command(command)
+                    command = command.replace("find:", "")
+                    apk_path, string_to_find = command.split(";")
+                    apk_path = apk_path.strip()
+                    a, d, dx = AnalyzeAPK(apk_path)
+                    found_strings = dx.find_strings(string_to_find) #Find strings by regex
+
+                    for found_string in found_strings:
+                        found_string = found_string.strip()
+                        print("'find' command hit target in app '{}' of value '{}'".format(apk_path,found_string))
+
+                        if os.path.isfile("find_output.txt"):
+                            file_to_write = open("find_output.txt", "a")
+                            file_to_write.write("'{}' | '{}' \n".format(apk_path,found_string))
+                            file_to_write.close()
+                        else:
+                            file_to_write = open("find_output.txt", "w")
+                            file_to_write.write("'{}' | '{}' \n".format(apk_path,found_string))
+                            file_to_write.close()
 
                 elif command.startswith("read:"):
                     command = self._construct_command(command)
