@@ -167,7 +167,7 @@ The keyword 'find' followed by a path to an apk and a regex string to find will 
 {
   "devices": ["*"],
     "apps": ["*"],
-    "commands": ["adb.exe pull !app_path !app_id.apk","find: !app_id.apk;ACCESSIBILITY"]
+    "commands": ["adb pull !app_path !app_id.apk","find: !app_id.apk;my_string"]
 }
 ```
 
