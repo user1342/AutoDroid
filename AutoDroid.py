@@ -174,13 +174,14 @@ class AndroidInterface():
                     for found_string in found_strings:
                         found_string = str(found_string).strip()
                         print("'find' command hit target in app '{}' of value '{}'".format(apk_path,found_string))
-
-                        if os.path.isfile("find_output.txt"):
-                            file_to_write = open("find_output.txt", "a")
+                        
+                        file_name = "{}-find_output.txt".format(string_to_find)
+                        if os.path.isfile(file_name):
+                            file_to_write = open(file_name, "a")
                             file_to_write.write("'{}' | '{}' \n".format(apk_path,found_string))
                             file_to_write.close()
                         else:
-                            file_to_write = open("find_output.txt", "w")
+                            file_to_write = open(file_name, "w")
                             file_to_write.write("'{}' | '{}' \n".format(apk_path,found_string))
                             file_to_write.close()
 
